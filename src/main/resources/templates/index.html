@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA Encryption</title>
+</head>
+<body>
+<h2>تشفير الرسائل باستخدام RSA</h2>
+
+<form action="/encrypt" method="post">
+    <label>اكتب الرسالة:</label>
+    <input type="text" name="message" required>
+    <button type="submit">تشفير</button>
+</form>
+
+<div th:if="${encrypted}">
+    <p><strong>النص المشفر:</strong></p>
+    <textarea rows="5" cols="80" readonly th:text="${encrypted}"></textarea>
+
+    <form action="/decrypt" method="post">
+        <input type="hidden" name="encryptedMessage" th:value="${encrypted}">
+        <button type="submit">فك التشفير</button>
+    </form>
+</div>
+
+<div th:if="${decrypted}">
+    <p><strong>النص بعد فك التشفير:</strong> <span th:text="${decrypted}"></span></p>
+</div>
+</body>
+</html>
