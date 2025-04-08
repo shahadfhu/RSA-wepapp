@@ -1,0 +1,17 @@
+# نستخدم صورة جاهزة من Java 17
+FROM eclipse-temurin:17-jdk
+
+# نحدد مجلد العمل داخل الحاوية
+WORKDIR /app
+
+# ننسخ كل ملفات المشروع إلى الحاوية
+COPY . .
+
+# نثبت المشروع
+RUN ./mvnw clean install
+
+# نفتح البورت 8080
+EXPOSE 8080
+
+# نشغّل المشروع باستخدام Spring Boot
+CMD ["./mvnw", "spring-boot:run"]

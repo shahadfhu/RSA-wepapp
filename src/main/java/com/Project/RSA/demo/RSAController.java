@@ -11,17 +11,14 @@ import java.util.Base64;
 
         private KeyPair keyPair;
 
-        @PostConstruct
         public void init() throws NoSuchAlgorithmException {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(2048);
-            keyPair = keyGen.generateKeyPair();
-        }
+            keyPair = keyGen.generateKeyPair(); }
 
         @GetMapping("/")
         public String index() {
-            return "index";
-        }
+            return "index"; }
 
         @PostMapping("/encrypt")
         public String encrypt(@RequestParam("message") String message, Model model) throws Exception {
@@ -33,9 +30,7 @@ import java.util.Base64;
 
             String encrypted = Base64.getEncoder().encodeToString(encryptedBytes);
             model.addAttribute("encrypted", encrypted);
-
-            return "index";
-        }
+            return "index";}
 
         @PostMapping("/decrypt")
         public String decrypt(@RequestParam("encryptedMessage") String encryptedMessage, Model model) throws Exception {
