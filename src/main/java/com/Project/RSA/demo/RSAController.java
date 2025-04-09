@@ -10,7 +10,7 @@ import java.util.Base64;
     public class RSAController {
 
         private KeyPair keyPair;
-
+        @PostConstruct
         public void init() throws NoSuchAlgorithmException {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(2048);
