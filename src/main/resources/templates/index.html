@@ -1,84 +1,116 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSA Encryption</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f8fa;
-            padding: 40px;
+            background: #0f0f1a;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
             text-align: center;
+            padding: 40px;
         }
         h2 {
-            color: #4b0082;
-            margin-bottom: 10px;
+            color: #c084fc;
+            font-size: 28px;
+            margin-bottom: 30px;
         }
-        form {
+        form, .result {
+            background: #1a1a2e;
+            padding: 20px;
             margin: 20px auto;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 10px #7c3aed50;
         }
-        input[type="text"], textarea {
-            width: 60%;
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #ddd;
+        }
+        input[type="text"] {
+            width: 90%;
             padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: none;
+            background: #26263a;
+            color: white;
+            font-size: 15px;
         }
         button {
-            padding: 10px 20px;
-            background-color: #6a5acd;
-            color: white;
+            background-color: #7c3aed;
             border: none;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
-            margin-top: 15px;
+            transition: background 0.3s ease;
         }
         button:hover {
-            background-color: #5a4abd;
+            background-color: #a855f7;
         }
-        .result {
-            margin-top: 30px;
+        textarea {
+            width: 100%;
+            padding: 10px;
+            background: #26263a;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            font-size: 15px;
+            resize: vertical;
         }
-        .error {
-            color: red;
-            font-weight: bold;
+        .icon {
+            margin-left: 8px;
+        }
+        .copy-btn {
+            margin-top: 10px;
+            background-color: #10b981;
+        }
+        .copy-btn:hover {
+            background-color: #059669;
         }
     </style>
+    <script>
+        function copyToClipboard() {
+            const textarea = document.getElementById("encryptedText");
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("Copied to clipboard!");
+        }
+    </script>
 </head>
 <body>
+<h2>🔐 Encrypt Messages using <span style="color: #a855f7">RSA</span></h2>
 
-<h2>تشفير الرسائل باستخدام RSA</h2>
-
-<!-- عرض رسالة الخطأ -->
-<p class="error" th:if="${error}" th:text="${error}"></p>
-
-<!-- نموذج التشفير -->
 <form action="/encrypt" method="post">
-    <label>اكتب الرسالة:</label><br>
-    <input type="text" name="message" placeholder="مثلاً: أنا بخير">
-    <br>
-    <button type="submit">🔐 تشفير</button>
+    <label>Enter your message:</label>
+    <input type="text" name="message" placeholder="e.g. I am fine">
+    <button type="submit">🔐 Encrypt</button>
 </form>
 
-<!-- عرض الرسالة المشفرة -->
 <div class="result" th:if="${encrypted}">
-    <h3>النص المشفر:</h3>
-    <textarea rows="5" readonly th:text="${encrypted}"></textarea>
+    <p><strong>Encrypted Message:</strong></p>
+    <textarea id="encryptedText" rows="5" readonly th:text="${encrypted}"></textarea>
+    <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
 
-    <!-- زر فك التشفير -->
     <form action="/decrypt" method="post">
         <input type="hidden" name="encryptedMessage" th:value="${encrypted}">
-        <br>
-        <button type="submit">🔓 فك التشفير</button>
+        <button type="submit">🔓 Decrypt</button>
     </form>
 </div>
 
-<!-- عرض الرسالة المفكوكة -->
 <div class="result" th:if="${decrypted}">
-    <h3>النص بعد فك التشفير:</h3>
-    <p th:text="${decrypted}"></p>
+    <p><strong>Decrypted Message:</strong></p>
+    <p style="font-weight: bold; color: #4ade80; font-size: 18px;" th:text="${decrypted}"></p>
 </div>
 
 </body>
 </html>
-
