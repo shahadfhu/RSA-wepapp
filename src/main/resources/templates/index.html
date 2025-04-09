@@ -3,28 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>RSA Encryption</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8fa;
+            padding: 40px;
+            text-align: center;
+        }
+        h2 {
+            color: #4b0082;
+            margin-bottom: 10px;
+        }
+        form {
+            margin: 20px auto;
+        }
+        input[type="text"], textarea {
+            width: 60%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #6a5acd;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #5a4abd;
+        }
+        .result {
+            margin-top: 30px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+
 <h2>تشفير الرسائل باستخدام RSA</h2>
 
+<!-- عرض رسالة الخطأ -->
+<p class="error" th:if="${error}" th:text="${error}"></p>
+
+<!-- نموذج التشفير -->
 <form action="/encrypt" method="post">
-    <label>اكتب الرسالة:</label>
-    <input type="text" name="message" required>
-    <button type="submit">تشفير</button>
+    <label>اكتب الرسالة:</label><br>
+    <input type="text" name="message" placeholder="مثلاً: أنا بخير">
+    <br>
+    <button type="submit">🔐 تشفير</button>
 </form>
 
-<div th:if="${encrypted}">
-    <p><strong>النص المشفر:</strong></p>
-    <textarea rows="5" cols="80" readonly th:text="${encrypted}"></textarea>
+<!-- عرض الرسالة المشفرة -->
+<div class="result" th:if="${encrypted}">
+    <h3>النص المشفر:</h3>
+    <textarea rows="5" readonly th:text="${encrypted}"></textarea>
 
+    <!-- زر فك التشفير -->
     <form action="/decrypt" method="post">
         <input type="hidden" name="encryptedMessage" th:value="${encrypted}">
-        <button type="submit">فك التشفير</button>
+        <br>
+        <button type="submit">🔓 فك التشفير</button>
     </form>
 </div>
 
-<div th:if="${decrypted}">
-    <p><strong>النص بعد فك التشفير:</strong> <span th:text="${decrypted}"></span></p>
+<!-- عرض الرسالة المفكوكة -->
+<div class="result" th:if="${decrypted}">
+    <h3>النص بعد فك التشفير:</h3>
+    <p th:text="${decrypted}"></p>
 </div>
+
 </body>
 </html>
+

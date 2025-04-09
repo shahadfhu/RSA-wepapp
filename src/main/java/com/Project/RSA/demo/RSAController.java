@@ -22,6 +22,16 @@ import java.util.Base64;
 
         @PostMapping("/encrypt")
         public String encrypt(@RequestParam("message") String message, Model model) throws Exception {
+            if (message == null || message.trim().isEmpty()) {
+                model.addAttribute("error", "الرجاء كتابة رسالة للتشفير.");
+                return "index";
+            }
+
+            if (keyPair == null) {
+                model.addAttribute("error", "حدثت مشكلة داخلية، الرجاء إعادة المحاولة.");
+                return "index";
+            }
+
             PublicKey publicKey = keyPair.getPublic();
 
             Cipher cipher = Cipher.getInstance("RSA");
@@ -30,7 +40,9 @@ import java.util.Base64;
 
             String encrypted = Base64.getEncoder().encodeToString(encryptedBytes);
             model.addAttribute("encrypted", encrypted);
-            return "index";}
+            return "index";
+        }
+
 
         @PostMapping("/decrypt")
         public String decrypt(@RequestParam("encryptedMessage") String encryptedMessage, Model model) throws Exception {
