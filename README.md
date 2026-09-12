@@ -2,7 +2,7 @@
 
 A simple Spring Boot web application that demonstrates RSA public-key encryption and decryption through a browser interface. Enter a message, encrypt it with a generated RSA key pair, and decrypt it back — all in real time.
 
-> * **Educational project.** This app is meant to demonstrate how RSA encryption works, not to be used as a production-grade secure messaging system. See [Known Limitations](#known-limitations) below.
+> ⚠️ **Educational project.** This app is meant to demonstrate how RSA encryption works, not to be used as a production-grade secure messaging system. See [Known Limitations](#known-limitations) below.
 
 ---
 
